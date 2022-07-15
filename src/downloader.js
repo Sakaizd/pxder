@@ -223,8 +223,7 @@ function downloadIllusts(illusts, dldir, totalThread) {
 							} else if (times == 1) errorThread++;
 							if (global.p_debug) console.log(e);
 							console.log(
-								`  ${times >= 10 ? `[${threadID}]`.bgRed : `[${threadID}]`.bgYellow}\t${(parseInt(i) + 1).toString().green}/${illusts.length}\t ${'pid'.gray} ${
-									illust.id.toString().cyan
+								`  ${times >= 10 ? `[${threadID}]`.bgRed : `[${threadID}]`.bgYellow}\t${(parseInt(i) + 1).toString().green}/${illusts.length}\t ${'pid'.gray} ${illust.id.toString().cyan
 								}\t${illust.title.yellow}`
 							);
 							return tryDownload(times + 1);
@@ -262,7 +261,8 @@ async function getIllustratorNewDir(data) {
 	Fse.ensureDirSync(mainDir);
 	const files = Fse.readdirSync(mainDir);
 	for (const file of files) {
-		if (file.indexOf('(' + data.id + ')') === 0) {
+		// if (file.indexOf('(' + data.id + ')') === 0) {
+		if (file.indexOf(data.id + '_') === 0) {
 			dldir = file;
 			break;
 		}
@@ -273,7 +273,8 @@ async function getIllustratorNewDir(data) {
 	const nameExtIndex = iName.search(/@|＠/);
 	if (nameExtIndex >= 1) iName = iName.substring(0, nameExtIndex);
 	iName = iName.replace(/[/\\:*?"<>|.&$]/g, '').replace(/[ ]+$/, '');
-	const dldirNew = '(' + data.id + ')' + iName;
+	// const dldirNew = '(' + data.id + ')' + iName;
+	const dldirNew = data.id + '_' + iName;
 
 	// 决定下载目录
 	if (!dldir) {
